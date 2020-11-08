@@ -3,6 +3,7 @@ import UIKit
 public let deviceBounds = UIScreen.main.bounds
 public let deviceWidth = deviceBounds.size.width
 public let deviceHeight = deviceBounds.size.height
+public let deviceSize = CGSize(width: deviceWidth, height: deviceHeight)
 public let frameHeight = CGFloat(300)
 public let frameWidth = CGFloat(300)
 public let ellipseShrink = CGFloat(20)

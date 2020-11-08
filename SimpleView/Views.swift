@@ -33,7 +33,7 @@ public class DrawUIViewFlip: UIView, CustomDrawView {
 
 public class CurrentContextUIView: UIView, CustomDrawView {
     public func customDraw() {
-        UIGraphicsBeginImageContext(CGSize(width: deviceWidth, height: deviceHeight))
+        UIGraphicsBeginImageContext(deviceSize)
         guard let context = UIGraphicsGetCurrentContext()
         else { return }
         
@@ -45,7 +45,7 @@ public class CurrentContextUIView: UIView, CustomDrawView {
 
 public class CurrentContextUIViewFlip: UIView, CustomDrawView {
     public func customDraw() {
-        UIGraphicsBeginImageContext(CGSize(width: deviceWidth, height: deviceHeight))
+        UIGraphicsBeginImageContext(deviceSize)
         guard let context = UIGraphicsGetCurrentContext()
         else { return }
         context.concatenate(.flippingVerticaly(deviceHeight))
@@ -57,7 +57,7 @@ public class CurrentContextUIViewFlip: UIView, CustomDrawView {
 
 public class CurrentContextUIImageView: UIImageView, CustomDrawView {
     public func customDraw() {
-        UIGraphicsBeginImageContext(CGSize(width: deviceWidth, height: deviceHeight))
+        UIGraphicsBeginImageContext(deviceSize)
         guard let context = UIGraphicsGetCurrentContext()
         else { return }
         
@@ -68,7 +68,7 @@ public class CurrentContextUIImageView: UIImageView, CustomDrawView {
 
 public class CurrentContextUIImageViewFlip: UIImageView, CustomDrawView {
     public func customDraw() {
-        UIGraphicsBeginImageContext(CGSize(width: deviceWidth, height: deviceHeight))
+        UIGraphicsBeginImageContext(deviceSize)
         guard let context = UIGraphicsGetCurrentContext()
         else { return }
         context.concatenate(.flippingVerticaly(deviceHeight))
@@ -79,8 +79,7 @@ public class CurrentContextUIImageViewFlip: UIImageView, CustomDrawView {
 
 public class RendererContextUIView: UIView, CustomDrawView {
     public func customDraw() {
-        let size = CGSize(width: deviceWidth, height: deviceHeight)
-        let renderer = UIGraphicsImageRenderer(size: size)
+        let renderer = UIGraphicsImageRenderer(size: deviceSize)
         let renderImage = renderer.image { ctx in
             ctx.cgContext.customDrawing()
         }
@@ -90,8 +89,7 @@ public class RendererContextUIView: UIView, CustomDrawView {
 
 public class RendererContextUIViewFlip: UIView, CustomDrawView {
     public func customDraw() {
-        let size = CGSize(width: deviceWidth, height: deviceHeight)
-        let renderer = UIGraphicsImageRenderer(size: size)
+        let renderer = UIGraphicsImageRenderer(size: deviceSize)
         let renderImage = renderer.image { ctx in
             ctx.cgContext.concatenate(.flippingVerticaly(deviceHeight))
             ctx.cgContext.customDrawing()
@@ -102,26 +100,20 @@ public class RendererContextUIViewFlip: UIView, CustomDrawView {
 
 public class RendererContextUIImageView: UIImageView, CustomDrawView {
     public func customDraw() {
-        let size = CGSize(width: deviceWidth, height: deviceHeight)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        let renderImage = renderer.image { ctx in
+        let renderer = UIGraphicsImageRenderer(size: deviceSize)
+        image = renderer.image { ctx in
             ctx.cgContext.customDrawing()
         }
-        guard let cgImage = renderImage.cgImage else { return }
-        image = UIImage(cgImage: cgImage)
     }
 }
 
 public class RendererContextUIImageViewFlip: UIImageView, CustomDrawView {
     public func customDraw() {
-        let size = CGSize(width: deviceWidth, height: deviceHeight)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        let renderImage = renderer.image { ctx in
+        let renderer = UIGraphicsImageRenderer(size: deviceSize)
+        image = renderer.image { ctx in
             ctx.cgContext.concatenate(.flippingVerticaly(deviceHeight))
             ctx.cgContext.customDrawing()
         }
-        guard let cgImage = renderImage.cgImage else { return }
-        image = UIImage(cgImage: cgImage)
     }
 }
 
