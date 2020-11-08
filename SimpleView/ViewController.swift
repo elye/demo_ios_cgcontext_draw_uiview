@@ -19,14 +19,15 @@ class ViewController: UIViewController {
     }
     
     private func setupButton(title: String, yPos: CGFloat, drawView: CustomDrawView) {
-        let button1 = UIButton(frame: CGRect(x: 0, y: yPos, width: deviceWidth, height: 45))
-        button1.backgroundColor = .gray
-        button1.setTitle(title, for: .normal)
-        button1.add(for: .touchUpInside) { [unowned self] in
-            self.present(
-                ContextViewController(drawView: drawView), animated: true)
+        let button = UIButton(frame: CGRect(x: 0, y: yPos, width: deviceWidth, height: 45))
+        button.backgroundColor = .gray
+        button.setTitle(title, for: .normal)
+        button.add(for: .touchUpInside) { [unowned self] in
+            let newVC = ContextViewController(drawView: drawView)
+            newVC.modalPresentationStyle = .fullScreen
+            self.present(newVC, animated: true)
         }
-        self.view.addSubview(button1)
+        self.view.addSubview(button)
     }
 }
 
@@ -67,8 +68,16 @@ class ContextViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         drawView.customDraw()
-        self.view = drawView
-
-        self.view.backgroundColor = .white
+        view = drawView
+        view.isUserInteractionEnabled = true
+        view.backgroundColor = .white
+        let gesture = UISwipeGestureRecognizer(target: self, action: #selector(dismissVC))
+        gesture.direction = .down
+        view.addGestureRecognizer(gesture)
+    }
+        
+    @objc
+    private func dismissVC() {
+        dismiss(animated: true)
     }
 }
